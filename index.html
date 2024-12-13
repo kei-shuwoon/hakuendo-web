@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博淵堂 | Hakuendo Knowledge Technology</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #1D2A3B;
+            --primary-light: #F7F3E9;
+            --accent-red: #9B2335;
+            --neutral-gray: #7A8B99;
+            --accent-gold: #BF9D7A;
+        }
+
+        body {
+            font-family: "游明朝", YuMincho, "Hiragino Mincho ProN W3", "ヒラギノ明朝 ProN W3", "Noto Serif JP", serif;
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            line-height: 1.6;
+        }
+
+        .japanese-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2V0h4v22H20v-1.5zM0 20h2v20H0V20zm4 0h2v20H4V20zm4 0h2v20H8V20zm4 0h2v20h-2V20zm4 0h2v20h-2V20zm4 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2zm0 4h20v2H20v-2z' fill='%239B2335' fill-opacity='0.05'/%3E%3C/svg%3E");
+        }
+
+        nav {
+            background: var(--primary-dark);
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            color: var(--primary-light);
+            text-decoration: none;
+        }
+
+        .logo-main {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo-sub {
+            font-size: 0.8rem;
+            color: var(--accent-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--primary-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(29, 42, 59, 0.7), rgba(29, 42, 59, 0.7)),
+                        url('/api/placeholder/1920/1080') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--primary-light);
+        }
+
+        .hero-content {
+            padding: 2rem;
+            background: rgba(29, 42, 59, 0.8);
+            border: 1px solid var(--accent-gold);
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-content h2 {
+            font-size: 2rem;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        .section {
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            padding: 0 2rem;
+        }
+
+        .section h2::before,
+        .section h2::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 60px;
+            height: 1px;
+            background-color: var(--accent-red);
+        }
+
+        .section h2::before {
+            left: -70px;
+        }
+
+        .section h2::after {
+            right: -70px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-red);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        footer {
+            background: var(--primary-dark);
+            color: var(--primary-light);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-main">博淵堂</span>
+                <span class="logo-sub">HAKUENDO</span>
+            </a>
+            <div class="nav-links">
+                <a href="#about">關於我們</a>
+                <a href="#services">服務項目</a>
+                <a href="#philosophy">理念</a>
+                <a href="#contact">聯絡我們</a>
+                <span class="language-switch">EN</span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero japanese-pattern">
+        <div class="hero-content">
+            <h1>博淵堂</h1>
+            <h2>HAKUENDO</h2>
+            <p>傳承知識・連結未來</p>
+            <p>Knowledge Heritage, Future Connection</p>
+        </div>
+    </section>
+
+    <section id="about" class="section japanese-pattern">
+        <div class="section-inner">
+            <h2>關於我們</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>願景</h3>
+                    <p>以教育為橋樑，連結台日文化與知識的交流</p>
+                </div>
+                <div class="card">
+                    <h3>使命</h3>
+                    <p>提供最優質的教育服務，協助學生實現留學夢想</p>
+                </div>
+                <div class="card">
+                    <h3>價值</h3>
+                    <p>專業、創新、誠信、關懷</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h3>博淵堂 | HAKUENDO</h3>
+                <p>Knowledge Technology Co., Ltd.</p>
+            </div>
+            <div class="footer-info">
+                <p>台灣｜日本</p>
+                <p>© 2024 Hakuendo All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
